@@ -1,229 +1,13 @@
-// // // import React, { useState } from 'react';
-// // // import { Nav, Offcanvas, Button, Form, InputGroup } from 'react-bootstrap';
-// // // import {
-// // //   FaTachometerAlt, FaMoneyBill, FaChartLine, FaAward,
-// // //   FaTicketAlt, FaHeadset, FaHistory, FaUserClock,
-// // //   FaUserPlus, FaUsers, FaSignOutAlt, FaSearch
-// // // } from 'react-icons/fa';
-// // // import { useNavigate } from 'react-router-dom';
-
-// // // const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) => {
-// // //   const [searchQuery, setSearchQuery] = useState('');
-// // //   const navigate = useNavigate();
-
-// // //   const menuItems = [
-// // //     { name: 'Overview', icon: <FaTachometerAlt /> },
-// // //     { name: 'Payments', icon: <FaMoneyBill /> },
-// // //     { name: 'Progress', icon: <FaChartLine /> },
-// // //     { name: 'Rewards', icon: <FaAward /> },
-// // //     { name: 'Tickets', icon: <FaTicketAlt /> },
-// // //     { name: 'Support', icon: <FaHeadset /> },
-// // //     { name: 'Recent Actions', icon: <FaHistory /> },
-// // //     { name: 'Recent Activity', icon: <FaUserClock /> },
-// // //     { name: 'Registrations', icon: <FaUserPlus /> },
-// // //     { name: 'Users', icon: <FaUsers /> },
-// // //   ];
-
-// // //   const handleMenuItemClick = (name) => {
-// // //     setActiveComponent(name);
-// // //     if (window.innerWidth <= 992) {
-// // //       setShowSidebar(false);
-       
-// // //     }
-// // //   };
-
-// // //   const handleLogout = () => {
-// // //     localStorage.removeItem('isAuthenticated');
-// // //     navigate('/');
-// // //   };
-
-// // //   const filteredItems = menuItems.filter((item) =>
-// // //     item.name.toLowerCase().includes(searchQuery.toLowerCase())
-// // //   );
-
-// // //   return (
-// // //     <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)} responsive="lg" className="sidebar">
-// // //       <Offcanvas.Header closeButton closeVariant={darkMode ? 'white' : undefined}>
-// // //  <img
-// // //       src="/NOVYA LOGO.png"
-// // //       alt="NOVYA Logo"
-// // //       style={{
-// // //         width: '50px',
-// // //         height: '50px',
-// // //         marginRight: '10px',
-// // //         borderRadius: '10px',
-// // //         objectFit: 'cover',
-// // //         background: 'white'
-// // //       }}
-// // //     />
-// // //         <Offcanvas.Title className="sidebar-title gradient-heading"> NOVYA ADMIN MENU</Offcanvas.Title>
-
-// // //       </Offcanvas.Header>
-
-// // //       <Offcanvas.Body className="d-flex flex-column justify-content-between h-100">
-// // //         {/* 🔍 Search Bar */}
-// // //         <Form className="mb-3">
-// // //           <InputGroup>
-// // //             <InputGroup.Text><FaSearch /></InputGroup.Text>
-// // //             <Form.Control
-// // //               placeholder="Search menu..."
-// // //               value={searchQuery}
-// // //               onChange={(e) => setSearchQuery(e.target.value)}
-// // //             />
-// // //           </InputGroup>
-// // //         </Form>
-
-// // //         {/* 📁 Menu Items */}
-// // //         <Nav className="flex-column">
-// // //           {filteredItems.map((item) => (
-// // //             <Nav.Link
-// // //               key={item.name}
-// // //               onClick={() => handleMenuItemClick(item.name)}
-// // //               className="menu-item"
-// // //             >
-// // //               <span className="menu-icon me-3">{item.icon}</span>
-// // //               <span className="menu-text">{item.name}</span>
-// // //             </Nav.Link>
-// // //           ))}
-// // //         </Nav>
-
-// // //         {/* 🚪 Logout */}
-// // //         <div className="mt-auto pt-3 border-top">
-// // //           <Button variant="outline-danger" className="w-100" onClick={handleLogout}>
-// // //             <FaSignOutAlt className="me-2" />
-// // //             Logout
-// // //           </Button>
-// // //         </div>
-// // //       </Offcanvas.Body>
-// // //     </Offcanvas>
-// // //   );
-// // // };
-
-// // // export default Sidebar;
-// // import React, { useState } from 'react';
-// // import { Nav, Offcanvas, Button, Form, InputGroup } from 'react-bootstrap';
-// // import {
-// //   FaTachometerAlt, FaMoneyBill, FaChartLine, FaAward,
-// //   FaTicketAlt, FaHeadset, FaHistory, FaUserClock,
-// //   FaUserPlus, FaUsers, FaSignOutAlt, FaSearch
-// // } from 'react-icons/fa';
-// // import { useNavigate } from 'react-router-dom';
-
-// // const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) => {
-// //   const [searchQuery, setSearchQuery] = useState('');
-// //   const navigate = useNavigate();
-
-// //   const menuItems = [
-// //     { name: 'Overview', icon: <FaTachometerAlt /> },
-// //     { name: 'Payments', icon: <FaMoneyBill /> },
-// //     { name: 'Progress', icon: <FaChartLine /> },
-// //     { name: 'Rewards', icon: <FaAward /> },
-// //     { name: 'Tickets', icon: <FaTicketAlt /> },
-// //     { name: 'Support', icon: <FaHeadset /> },
-// //     { name: 'Recent Actions', icon: <FaHistory /> },
-// //     { name: 'Recent Activity', icon: <FaUserClock /> },
-// //     { name: 'Registrations', icon: <FaUserPlus /> },
-// //     { name: 'Users', icon: <FaUsers /> },
-// //   ];
-
-// //   const handleMenuItemClick = (name) => {
-// //     setActiveComponent(name);
-// //     if (window.innerWidth <= 992) {
-// //       setShowSidebar(false);
-// //     }
-// //   };
-
-// //   const handleLogout = () => {
-// //     localStorage.removeItem('isAuthenticated');
-// //     navigate('/');
-// //   };
-
-// //   const filteredItems = menuItems.filter((item) =>
-// //     item.name.toLowerCase().includes(searchQuery.toLowerCase())
-// //   );
-
-// //   return (
-// //     <Offcanvas
-// //       show={showSidebar}
-// //       onHide={() => setShowSidebar(false)}
-// //       responsive="lg"
-// //       className="sidebar"
-// //       backdrop={false}
-// //     >
-// //       <Offcanvas.Header closeButton closeVariant={darkMode ? 'white' : undefined}>
-// //         <img
-// //           src="/NOVYA LOGO.png"
-// //           alt="NOVYA Logo"
-// //           style={{
-// //             width: '50px',
-// //             height: '50px',
-// //             marginRight: '10px',
-// //             borderRadius: '10px',
-// //             objectFit: 'cover',
-// //             background: 'white',
-// //           }}
-// //         />
-// //         <Offcanvas.Title className="sidebar-title gradient-heading">
-// //           NOVYA ADMIN MENU
-// //         </Offcanvas.Title>
-// //       </Offcanvas.Header>
-
-// //       <Offcanvas.Body className="d-flex flex-column h-100">
-// //         {/* 🔍 Search */}
-// //         <div>
-// //           <Form className="mb-3">
-// //             <InputGroup>
-// //               <InputGroup.Text>
-// //                 <FaSearch />
-// //               </InputGroup.Text>
-// //               <Form.Control
-// //                 placeholder="Search menu..."
-// //                 value={searchQuery}
-// //                 onChange={(e) => setSearchQuery(e.target.value)}
-// //               />
-// //             </InputGroup>
-// //           </Form>
-
-// //           {/* 📁 Menu Items */}
-// //           <Nav className="flex-column">
-// //             {filteredItems.map((item) => (
-// //               <Nav.Link
-// //                 key={item.name}
-// //                 onClick={() => handleMenuItemClick(item.name)}
-// //                 className="menu-item"
-// //               >
-// //                 <span className="menu-icon me-3">{item.icon}</span>
-// //                 <span className="menu-text">{item.name}</span>
-// //               </Nav.Link>
-// //             ))}
-// //           </Nav>
-// //         </div>
-
-// //         {/* 🚪 Logout - Always sticks to bottom */}
-// //         <div className="mt-auto pt-3 border-top">
-// //           <Button variant="outline-danger" className="w-100" onClick={handleLogout}>
-// //             <FaSignOutAlt className="me-2" />
-// //             Logout
-// //           </Button>
-// //         </div>
-// //       </Offcanvas.Body>
-// //     </Offcanvas>
-// //   );
-// // };
-
-// // export default Sidebar;
 // import React, { useState } from 'react';
-// import { Nav, Offcanvas, Button, Form, InputGroup } from 'react-bootstrap';
+// import { Nav, Offcanvas, Form, InputGroup } from 'react-bootstrap';
 // import {
 //   FaTachometerAlt, FaMoneyBill, FaChartLine, FaAward,
 //   FaTicketAlt, FaHeadset, FaHistory, FaUserClock,
-//   FaUserPlus, FaUsers, FaSignOutAlt, FaSearch
+//   FaUserPlus, FaUsers, FaSearch
 // } from 'react-icons/fa';
-// import { useNavigate } from 'react-router-dom';
 
 // const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) => {
 //   const [searchQuery, setSearchQuery] = useState('');
-//   const navigate = useNavigate();
 
 //   const menuItems = [
 //     { name: 'Overview', icon: <FaTachometerAlt /> },
@@ -245,11 +29,6 @@
 //     }
 //   };
 
-//   const handleLogout = () => {
-//     localStorage.removeItem('isAuthenticated');
-//     navigate('/');
-//   };
-
 //   const filteredItems = menuItems.filter((item) =>
 //     item.name.toLowerCase().includes(searchQuery.toLowerCase())
 //   );
@@ -263,68 +42,68 @@
 //       backdrop={false}
 //     >
 //       <Offcanvas.Header closeButton closeVariant={darkMode ? 'white' : undefined}>
-//         <img
-//           src="/NOVYA LOGO.png"
-//           alt="NOVYA Logo"
-//           style={{
-//             width: '50px',
-//             height: '50px',
-//             marginRight: '10px',
-//             borderRadius: '10px',
-//             objectFit: 'cover',
-//             background: 'white',
-//           }}
-//         />
-//         <Offcanvas.Title className="sidebar-title gradient-heading">
-//           NOVYA ADMIN MENU
-//         </Offcanvas.Title>
+//         <div className="d-flex align-items-center">
+//           {/* LOGO */}
+//           <img
+//             src="/NOVYA LOGO (1).png"
+//             alt="NOVYA Logo"
+//             style={{
+//               width: '50px',
+//               height: '70px',
+//               marginRight: '10px',
+//               borderRadius: '10px',
+//               objectFit: 'cover',
+//               background: 'white',
+//             }}
+//           />
+
+//           {/* TITLE IMAGE */}
+//           <img
+//             src="/NOVYA TITLE.png"
+//             alt="NOVYA Title"
+//             style={{
+//               height: '170px',     // increase for larger size
+//               objectFit: 'contain',
+//               maxWidth: '180px',
+//             }}
+//           />
+//         </div>
 //       </Offcanvas.Header>
 
 //       <Offcanvas.Body style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflowY: 'auto' }}>
 //         {/* 🔍 Search */}
-//         <div>
-//           <Form className="mb-3">
-//             <InputGroup>
-//               <InputGroup.Text>
-//                 <FaSearch />
-//               </InputGroup.Text>
-//               <Form.Control
-//                 placeholder="Search menu..."
-//                 value={searchQuery}
-//                 onChange={(e) => setSearchQuery(e.target.value)}
-//               />
-//             </InputGroup>
-//           </Form>
+//         <Form className="mb-3">
+//           <InputGroup>
+//             <InputGroup.Text>
+//               <FaSearch />
+//             </InputGroup.Text>
+//             <Form.Control
+//               placeholder="Search menu..."
+//               value={searchQuery}
+//               onChange={(e) => setSearchQuery(e.target.value)}
+//             />
+//           </InputGroup>
+//         </Form>
 
-//           {/* 📁 Menu Items */}
-//           <Nav className="flex-column">
-//             {filteredItems.map((item) => (
-//               <Nav.Link
-//                 key={item.name}
-//                 onClick={() => handleMenuItemClick(item.name)}
-//                 className="menu-item"
-//               >
-//                 <span className="menu-icon me-3">{item.icon}</span>
-//                 <span className="menu-text">{item.name}</span>
-//               </Nav.Link>
-//             ))}
-//           </Nav>
-//         </div>
-
-//         {/* 🚪 Logout - Always visible */}
-//         <div className="mt-auto pt-3 border-top">
-//           <Button variant="outline-danger" className="w-100" onClick={handleLogout}>
-//             <FaSignOutAlt className="me-2" />
-//             Logout
-//           </Button>
-//         </div>
+//         {/* 📁 Menu Items */}
+//         <Nav className="flex-column">
+//           {filteredItems.map((item) => (
+//             <Nav.Link
+//               key={item.name}
+//               onClick={() => handleMenuItemClick(item.name)}
+//               className="menu-item"
+//             >
+//               <span className="menu-icon me-3">{item.icon}</span>
+//               <span className="menu-text">{item.name}</span>
+//             </Nav.Link>
+//           ))}
+//         </Nav>
 //       </Offcanvas.Body>
 //     </Offcanvas>
 //   );
 // };
 
 // export default Sidebar;
-   
 
 
 import React, { useState } from 'react';
@@ -334,8 +113,10 @@ import {
   FaTicketAlt, FaHeadset, FaHistory, FaUserClock,
   FaUserPlus, FaUsers, FaSearch
 } from 'react-icons/fa';
+
 const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) => {
   const [searchQuery, setSearchQuery] = useState('');
+
   const menuItems = [
     { name: 'Overview', icon: <FaTachometerAlt /> },
     { name: 'Payments', icon: <FaMoneyBill /> },
@@ -355,6 +136,7 @@ const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) 
       setShowSidebar(false);
     }
   };
+
   const filteredItems = menuItems.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -368,25 +150,39 @@ const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) 
       backdrop={false}
     >
       <Offcanvas.Header closeButton closeVariant={darkMode ? 'white' : undefined}>
-        <img
-          src="/NOVYA LOGO.png"
-          alt="NOVYA Logo"
-          style={{
-            width: '50px',
-            height: '50px',
-            marginRight: '10px',
-            borderRadius: '10px',
-            objectFit: 'cover',
-            background: 'white',
-          }}
-        />
-        <Offcanvas.Title className="sidebar-title gradient-heading">
-          NOVYA ADMIN MENU
-        </Offcanvas.Title>
+        <div className="d-flex align-items-center">
+          {/* Logo Image */}
+          <img
+            src="/NOVYA LOGO (1).png"
+            alt="NOVYA Logo"
+            style={{
+              width: '50px',
+              height: '70px',
+              marginRight: '10px',
+              borderRadius: '10px',
+              objectFit: 'cover',
+              background: 'white',
+            }}
+          />
+
+          {/* Gradient Text instead of image */}
+          <h4
+            className="m-0"
+            style={{
+              fontSize: '1.8rem',
+              background: 'linear-gradient(90deg, #6D0DAD, #C316A4, #F02D6D, #FF5E52, #FF8547)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontWeight: 'bold'
+            }}
+          >
+            NOVYA
+          </h4>
+        </div>
       </Offcanvas.Header>
 
       <Offcanvas.Body style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflowY: 'auto' }}>
-        {/* 🔍 Search */}
+        {/* 🔍 Search Bar */}
         <Form className="mb-3">
           <InputGroup>
             <InputGroup.Text>
@@ -417,4 +213,5 @@ const Sidebar = ({ showSidebar, darkMode, setActiveComponent, setShowSidebar }) 
     </Offcanvas>
   );
 };
+
 export default Sidebar;

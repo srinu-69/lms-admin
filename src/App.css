@@ -1128,3 +1128,8 @@ button.export-btn:hover {
   background-color: #f0f0f0;
   border-radius: 5px;
 }
+.gradient-text {
+  background: linear-gradient(90deg, #7e2ce2, #ff6a3d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
