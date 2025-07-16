@@ -17,6 +17,7 @@
   --muted: #B0BEC5;
   --white: #FFFFFF;
   --border-color: rgba(0, 0, 0, 0.1);
+  
 }
 
 * {
@@ -30,6 +31,8 @@ body {
   background-color: var(--light);
   color: var(--dark);
   line-height: 1.6;
+ 
+  
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -136,6 +139,9 @@ a:hover {
 .admin-dashboard {
   display: flex;
   min-height: 100vh;
+  background-color: rgb(239, 244, 251);
+
+ 
 }
 
 /* Top Navigation */
@@ -149,6 +155,7 @@ a:hover {
   display: flex;
   align-items: center;
   padding: 0 2rem;
+ 
 }
 
 .navbar-brand {
@@ -233,18 +240,23 @@ a:hover {
   z-index: 1000;
   transition: all 0.3s ease;
   padding-top: 70px;
+ 
+  
+    
 }
 
 .sidebar-brand {
   padding: 1.5rem;
   text-align: center;
   border-bottom: 1px solid var(--border-color);
+   
 }
 
 .sidebar-menu {
   padding: 1rem 0;
   height: calc(100vh - 130px);
   overflow-y: auto;
+   
 }
 
 .sidebar-menu-item {
@@ -253,13 +265,15 @@ a:hover {
   border-radius: 6px;
   display: flex;
   align-items: center;
-  color: var(--dark);
+  color: var(--light);
   transition: all 0.3s ease;
+   
 }
 
 .sidebar-menu-item:hover {
   background-color: var(--primary-light);
   color: var(--primary);
+    
 }
 
 .sidebar-menu-item.active {
@@ -278,6 +292,7 @@ a:hover {
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid var(--border-color);
+   
 }
 
 /* Main Content */
@@ -287,7 +302,10 @@ a:hover {
   padding: 2rem;
   transition: all 0.3s ease;
   min-height: calc(100vh - 70px);
-  background-color: var(--light);
+  background-color: var(--light);             
+
+                                              /* add here background color */
+background-color: rgb(244, 255, 255);
 }
 
 .page-header {
@@ -639,6 +657,7 @@ a:hover {
 @media (min-width: 992px) {
   .profile-info {
     display: block;
+    
   }
 }
 
@@ -1133,3 +1152,10 @@ button.export-btn:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+
+
+
+
+
+

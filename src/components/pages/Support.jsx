@@ -197,7 +197,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, ListGroup, Badge, Form, Button } from 'react-bootstrap';
 import { FaPhone, FaEnvelope, FaTicketAlt, FaPaperclip } from 'react-icons/fa';
-import axios from 'axios';
+// import axios from 'axios';
 
 const Support = () => {
   const [tickets, setTickets] = useState([]);
