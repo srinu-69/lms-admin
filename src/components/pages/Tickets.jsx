@@ -2,37 +2,54 @@ import React, { useState, useEffect } from 'react';
 import { Card, Table, Badge, Button, Form, Modal, Alert } from 'react-bootstrap';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import axios from 'axios';
 
 const Tickets = () => {
   const [tickets, setTickets] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [editModal, setEditModal] = useState(false);
   const [editingTicket, setEditingTicket] = useState(null);
-  const [error, setError] = useState('');
+  const [error] = useState('');
 
-  // 🧠 Load from backend or fallback to localStorage
-  const fetchTickets = async () => {
-    try {
-      const res = await axios.get('/api/tickets');
-      setTickets(res.data);
-      localStorage.setItem('tickets', JSON.stringify(res.data));
-      setError('');
-    } catch (err) {
-      const stored = localStorage.getItem('tickets');
-      if (stored) {
-        setTickets(JSON.parse(stored));
-        setError('⚠️ Showing offline data from localStorage.');
-      } else {
-        setError('❌ Failed to load tickets.');
-      }
+  // ✅ Static ticket data fallback
+  const staticTickets = [
+    {
+      id: 1,
+      title: 'Login Issue',
+      category: 'Authentication',
+      status: 'Open',
+      priority: 'High',
+      created: '2025-07-15',
+      assigned: 'John Doe',
+    },
+    {
+      id: 2,
+      title: 'UI Bug on Dashboard',
+      category: 'Frontend',
+      status: 'In Progress',
+      priority: 'Medium',
+      created: '2025-07-14',
+      assigned: 'Jane Smith',
+    },
+    {
+      id: 3,
+      title: 'Data sync delay',
+      category: 'Backend',
+      status: 'Resolved',
+      priority: 'Low',
+      created: '2025-07-10',
+      assigned: 'Mike Brown',
     }
-  };
+  ];
 
+  // 🔁 Load tickets from localStorage or static
   useEffect(() => {
-    fetchTickets();
-    const interval = setInterval(fetchTickets, 30000); // refresh every 30s
-    return () => clearInterval(interval);
+    const stored = localStorage.getItem('tickets');
+    if (stored) {
+      setTickets(JSON.parse(stored));
+    } else {
+      setTickets(staticTickets);
+      localStorage.setItem('tickets', JSON.stringify(staticTickets));
+    }
   }, []);
 
   const handleEdit = (ticket) => {
@@ -40,27 +57,21 @@ const Tickets = () => {
     setEditModal(true);
   };
 
-  const handleSave = async () => {
-    const updated = tickets.map(t => t.id === editingTicket.id ? editingTicket : t);
+  const handleSave = () => {
+    const updated = tickets.map(t =>
+      t.id === editingTicket.id ? editingTicket : t
+    );
     setTickets(updated);
     localStorage.setItem('tickets', JSON.stringify(updated));
-    try {
-      await axios.put(`/api/tickets/${editingTicket.id}`, editingTicket);
-    } catch {
-      console.warn('Failed to save to backend');
-    }
     setEditModal(false);
   };
 
-  const handleResolve = async (ticketId) => {
-    const updated = tickets.map(t => t.id === ticketId ? { ...t, status: 'Resolved' } : t);
+  const handleResolve = (ticketId) => {
+    const updated = tickets.map(t =>
+      t.id === ticketId ? { ...t, status: 'Resolved' } : t
+    );
     setTickets(updated);
     localStorage.setItem('tickets', JSON.stringify(updated));
-    try {
-      await axios.patch(`/api/tickets/${ticketId}`, { status: 'Resolved' });
-    } catch {
-      console.warn('Failed to mark as resolved on backend');
-    }
   };
 
   const handleExportPDF = () => {
@@ -68,7 +79,9 @@ const Tickets = () => {
     doc.text('Tickets Report', 14, 10);
     autoTable(doc, {
       head: [['ID', 'Title', 'Category', 'Status', 'Priority', 'Created', 'Assigned']],
-      body: tickets.map(t => [t.id, t.title, t.category, t.status, t.priority, t.created, t.assigned]),
+      body: tickets.map(t =>
+        [t.id, t.title, t.category, t.status, t.priority, t.created, t.assigned]
+      ),
       startY: 20,
     });
     doc.save('tickets_report.pdf');

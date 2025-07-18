@@ -1,6 +1,4 @@
-
-import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import React, { useRef } from 'react';
 import { Row, Col, Card, Table, Badge, Alert } from 'react-bootstrap';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
@@ -20,7 +18,6 @@ const fadeInDelay = (delay) => ({
   animationDelay: `${delay}s`
 });
 
-// Inject keyframes into global stylesheet once
 if (typeof document !== "undefined") {
   const styleSheet = document.styleSheets[0];
   const keyframes = `
@@ -40,47 +37,26 @@ const Overview = () => {
   const chartRef1 = useRef(null);
   const chartRef2 = useRef(null);
 
-  const [stats, setStats] = useState({ revenue: 0, newUsers: 0, totalUsers: 0, solvedTickets: 0, pendingTickets: 0 });
-  const [users, setUsers] = useState([]);
-  const [registrations, setRegistrations] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // 💾 Static Data
+  const stats = {
+    revenue: 12500,
+    newUsers: 18,
+    totalUsers: 120,
+    solvedTickets: 45,
+    pendingTickets: 12
+  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [userRes, regRes, statRes] = await Promise.all([
-          axios.get('/api/users'),
-          axios.get('/api/registrations'),
-          axios.get('/api/stats')
-        ]);
-        setUsers(userRes.data);
-        setRegistrations(regRes.data);
-        setStats(statRes.data);
+  const users = [
+    { id: 1, name: "John Doe", email: "john@example.com", role: "Student", status: "Active" },
+    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Teacher", status: "Approved" },
+    { id: 3, name: "Mike Johnson", email: "mike@example.com", role: "Student", status: "Pending" }
+  ];
 
-        localStorage.setItem('users', JSON.stringify(userRes.data));
-        localStorage.setItem('registrations', JSON.stringify(regRes.data));
-        localStorage.setItem('overviewStats', JSON.stringify(statRes.data));
-      } catch (err) {
-        console.error('Error fetching from backend, loading localStorage instead:', err.message);
-        const localUsers = JSON.parse(localStorage.getItem('users')) || [];
-        const localRegs = JSON.parse(localStorage.getItem('registrations')) || [];
-        const localStats = JSON.parse(localStorage.getItem('overviewStats')) || {
-          revenue: 12500, newUsers: localUsers.length, totalUsers: localUsers.length + 20,
-          solvedTickets: 45, pendingTickets: 12
-        };
-        setUsers(localUsers);
-        setRegistrations(localRegs);
-        setStats(localStats);
-        setError("Backend not connected, showing local data.");
-      }
-      setLoading(false);
-    };
-
-    fetchData();
-    const interval = setInterval(fetchData, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  const registrations = [
+    { id: 1, name: "Sarah Lee", type: "Class 10", date: "2025-07-15", status: "Approved" },
+    { id: 2, name: "David Miller", type: "Class 11", date: "2025-07-12", status: "Pending" },
+    { id: 3, name: "Emma Watson", type: "Class 12", date: "2025-07-10", status: "Rejected" }
+  ];
 
   const ticketsData = {
     labels: ['Solved', 'Pending', 'Failed'],
@@ -100,11 +76,9 @@ const Overview = () => {
     }]
   };
 
-  if (loading) return <div className="p-4">Loading Overview...</div>;
-
   return (
     <div className="overview-page p-3">
-      {error && <Alert variant="warning">{error}</Alert>}
+      <Alert variant="info">Static Data Loaded - Backend/API Not Required</Alert>
 
       <Row className="mb-4">
         <Col md={3}><div style={fadeInDelay(0.1)}><StatCard icon={<FaChartBar />} title="Monthly Revenue" value={`₹${stats.revenue.toLocaleString()}`} bg="primary" /></div></Col>
@@ -190,15 +164,3 @@ const DataTable = ({ title, data, columns, isUser = false }) => (
 );
 
 export default Overview;
-
-
-
-
-
-
-
-
-
-
-
-

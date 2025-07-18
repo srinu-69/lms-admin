@@ -1,73 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
-  Card, ListGroup, Button, Modal, Form, Row, Col, Alert
+  Card, ListGroup, Button, Modal, Form, Row, Col, Alert,
 } from 'react-bootstrap';
+
+// Static mock data
+const mockActions = [
+  {
+    id: 1,
+    icon: '🛠️',
+    text: 'Fixed dashboard bug',
+    time: '09:30 AM',
+    admin: 'Alice',
+    details: 'Resolved issue with chart rendering in dashboard module.',
+  },
+  {
+    id: 2,
+    icon: '📢',
+    text: 'Announced new feature',
+    time: '11:00 AM',
+    admin: 'Bob',
+    details: 'Posted announcement about the new export feature in user panel.',
+  },
+  {
+    id: 3,
+    icon: '🔒',
+    text: 'Updated password policy',
+    time: '03:15 PM',
+    admin: 'Charlie',
+    details: 'Minimum length increased to 10 characters, added 2FA by default.',
+  },
+];
 
 const RecentActions = () => {
   const [actions, setActions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
-  const [error, setError] = useState('');
+  const [error] = useState('');
+  const [fadeIn, setFadeIn] = useState(false);
 
   const [newAction, setNewAction] = useState({
     icon: '📝',
     text: '',
     time: '',
     admin: '',
-    details: ''
+    details: '',
   });
 
-  // 🔄 Load from backend or localStorage
-  const fetchActions = async () => {
-    try {
-      const res = await axios.get('/api/recent-actions');
-      setActions(res.data);
-      localStorage.setItem('recentActions', JSON.stringify(res.data));
-      setError('');
-    } catch (err) {
-      const stored = localStorage.getItem('recentActions');
-      if (stored) {
-        setActions(JSON.parse(stored));
-        setError('⚠️ Using offline data. Backend not reachable.');
-      } else {
-        setActions([]);
-        setError('❌ No data available. Backend and local cache both failed.');
-      }
-    }
-  };
-
+  // Load data
   useEffect(() => {
-    fetchActions();
-    const interval = setInterval(fetchActions, 30000); // every 30 seconds
-    return () => clearInterval(interval);
+    const stored = localStorage.getItem('recentActions');
+    if (stored) {
+      setActions(JSON.parse(stored));
+    } else {
+      setActions(mockActions);
+      localStorage.setItem('recentActions', JSON.stringify(mockActions));
+    }
+
+    // Fade-in effect
+    setTimeout(() => setFadeIn(true), 100);
   }, []);
 
-  // ➕ Add new action
-  const handleAddAction = async (e) => {
+  const handleAddAction = (e) => {
     e.preventDefault();
-    if (!newAction.text || !newAction.time || !newAction.admin || !newAction.details) {
+    const { text, time, admin, details } = newAction;
+    if (!text || !time || !admin || !details) {
       alert('Please fill all fields');
       return;
     }
 
-    const newEntry = { ...newAction, id: Date.now() };
-    setActions(prev => [newEntry, ...prev]);
-    localStorage.setItem('recentActions', JSON.stringify([newEntry, ...actions]));
+    const newEntry = {
+      ...newAction,
+      id: Date.now(),
+    };
 
-    try {
-      await axios.post('/api/recent-actions', newEntry);
-    } catch {
-      alert('Failed to sync with backend. Saved locally.');
-    }
+    const updatedActions = [newEntry, ...actions];
+    setActions(updatedActions);
+    localStorage.setItem('recentActions', JSON.stringify(updatedActions));
 
     setNewAction({
       icon: '📝',
       text: '',
       time: '',
       admin: '',
-      details: ''
+      details: '',
     });
+
+    setFadeIn(false);
+    setTimeout(() => setFadeIn(true), 100); // Trigger fade-in for new item
   };
 
   const handleViewDetails = (action) => {
@@ -77,15 +96,15 @@ const RecentActions = () => {
 
   return (
     <>
-      <Card className="shadow-sm fade-in my-3">
-        <Card.Header className="text-center">
-          <h4 className="animated-heading mb-0">📋 Recent Actions</h4>
+      <Card className={`shadow-sm my-3 ${fadeIn ? 'fade-in' : ''}`} style={{ transition: 'opacity 0.6s ease-in', opacity: fadeIn ? 1 : 0 }}>
+        <Card.Header className="text-center bg-light">
+          <h4 className="mb-0">📋 Recent Actions</h4>
         </Card.Header>
 
         <Card.Body>
           {error && <Alert variant="warning" className="text-center">{error}</Alert>}
 
-          {/* ➕ Add Form */}
+          {/* Add Form */}
           <Form onSubmit={handleAddAction}>
             <Row className="g-2 mb-2">
               <Col md={2}>
@@ -131,7 +150,7 @@ const RecentActions = () => {
           </Form>
         </Card.Body>
 
-        {/* 🧾 List of Actions */}
+        {/* List of Actions */}
         <ListGroup variant="flush">
           {actions.length > 0 ? actions.map(action => (
             <ListGroup.Item key={action.id} className="d-flex justify-content-between align-items-center">
@@ -152,7 +171,7 @@ const RecentActions = () => {
         </ListGroup>
       </Card>
 
-      {/* 👁️‍🗨️ View Details Modal */}
+      {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Action Details</Modal.Title>
