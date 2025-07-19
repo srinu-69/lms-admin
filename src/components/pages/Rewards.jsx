@@ -23,7 +23,11 @@ const Rewards = () => {
   useEffect(() => {
     const stored = localStorage.getItem('rewards');
     if (stored) {
-      setRewards(JSON.parse(stored));
+      const parsed = JSON.parse(stored).map(r =>
+        r.class === 'Class 5' ? { ...r, class: 'Class 8' } : r
+      );
+      setRewards(parsed);
+      localStorage.setItem('rewards', JSON.stringify(parsed));
     } else {
       const staticData = [
         {
@@ -36,7 +40,7 @@ const Rewards = () => {
         },
         {
           id: 3, name: 'Ravi', type: 'Parent', category: 'Bronze',
-          reward: 'Supportive Parent', date: '2025-07-03', class: 'Class 5'
+          reward: 'Supportive Parent', date: '2025-07-03', class: 'Class 8'
         }
       ];
       setRewards(staticData);
@@ -88,7 +92,7 @@ const Rewards = () => {
     return acc;
   }, { Gold: 0, Silver: 0, Bronze: 0 });
 
-  const classLabels = Array.from({ length: 12 }, (_, i) => `Class ${i + 1}`);
+  const classLabels = Array.from({ length: 6 }, (_, i) => `Class ${i + 7}`);
   const rewardCountsByClass = classLabels.map(cls =>
     rewards.filter(r => r.class === cls).length
   );
@@ -223,7 +227,15 @@ const Rewards = () => {
             </Form.Group>
             <Form.Group className="mb-2">
               <Form.Label>Class</Form.Label>
-              <Form.Control value={formData.class} onChange={(e) => setFormData({ ...formData, class: e.target.value })} />
+              <Form.Select value={formData.class} onChange={(e) => setFormData({ ...formData, class: e.target.value })}>
+                <option value="">Select</option>
+                <option>Class 7</option>
+                <option>Class 8</option>
+                <option>Class 9</option>
+                <option>Class 10</option>
+                <option>Class 11</option>
+                <option>Class 12</option>
+              </Form.Select>
             </Form.Group>
           </Form>
         </Modal.Body>

@@ -100,7 +100,7 @@ const Progress = () => {
 
   return (
     <div className="p-3">
-      <Alert variant="info" className="text-center">📊 Static Progress Data: Class 1 to 12</Alert>
+      <Alert variant="info" className="text-center">📊 Static Progress Data: Class 7 to 12</Alert>
 
       <InputGroup className="mb-4 w-50 mx-auto">
         <InputGroup.Text><FaSearch /></InputGroup.Text>

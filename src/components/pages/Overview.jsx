@@ -68,7 +68,7 @@ const Overview = () => {
   };
 
   const classPerformanceData = {
-    labels: Array.from({ length: 12 }, (_, i) => `Class ${i + 1}`),
+    labels: Array.from({ length: 6 }, (_, i) => `Class ${i + 7}`),
     datasets: [{
       label: 'Average Score (%)',
       data: [78, 82, 75, 85, 90, 88, 79, 83, 87, 84, 81, 89],
