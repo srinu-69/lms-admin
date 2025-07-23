@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Card, Table, Button, Form, Modal } from 'react-bootstrap';
 
 const Registrations = () => {
@@ -6,12 +7,32 @@ const Registrations = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
-
-  // 🔁 Simulated dynamic data (start with empty list)
-  const [users] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     setTimeout(() => setFadeIn(true), 100);
+
+    console.log('Fetching registrations...');
+    axios.get('http://localhost:8000/api/registrations')
+      .then(response => {
+        console.log('Response received:', response.data);
+        const mappedRegistrations = response.data.map(reg => ({
+          regId: reg.reg_id,
+          registrationId: reg.registration_id,
+          firstName: reg.first_name,
+          lastName: reg.last_name,
+          phone: reg.mobile,
+          email: reg.email,
+          password: reg.password,
+          role: reg.role,
+          mappedUserId: reg.mapped_user_id,
+        }));
+        console.log('Mapped registrations:', mappedRegistrations);
+        setUsers(mappedRegistrations);
+      })
+      .catch(error => {
+        console.error('Error fetching registrations:', error);
+      });
   }, []);
 
   const filteredUsers = users.filter(user =>
@@ -54,12 +75,13 @@ const Registrations = () => {
             <thead style={{ backgroundColor: '#007bff', color: '#fff' }}>
               <tr style={{ textAlign: 'center' }}>
                 <th>Reg ID</th>
+                <th>Registration ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Phone</th>
                 <th>Email</th>
-                <th>Username</th>
                 <th>Role</th>
+                <th>Mapped User ID</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -68,12 +90,13 @@ const Registrations = () => {
                 filteredUsers.map((user, index) => (
                   <tr key={index} style={{ textAlign: 'center' }}>
                     <td>{user.regId}</td>
+                    <td>{user.registrationId}</td>
                     <td>{user.firstName}</td>
                     <td>{user.lastName}</td>
                     <td>{user.phone}</td>
                     <td>{user.email}</td>
-                    <td>{user.username}</td>
                     <td>{user.role}</td>
+                    <td>{user.mappedUserId}</td>
                     <td>
                       <Button
                         variant="outline-primary"
